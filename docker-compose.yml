@@ -1,0 +1,12 @@
+version: '3'
+services:
+  web:
+    image: nginx
+    container_name: git_proxy
+    volumes:
+     - ./default.template:/etc/nginx/conf.d/default.template
+    ports:
+     - "80:80"
+    environment:
+     - TOKEN=base64encodedtoken
+    command: /bin/bash -c "envsubst < /etc/nginx/conf.d/default.template > /etc/nginx/conf.d/default.conf && exec nginx -g 'daemon off;'"
